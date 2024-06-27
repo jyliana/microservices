@@ -2,6 +2,9 @@
 *.class
 /**/.mvn/wrapper/
 
+### IntelliJ IDEA ###
+.idea
+
 # Log file
 *.log
 
