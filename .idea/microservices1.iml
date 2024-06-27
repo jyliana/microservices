@@ -3,8 +3,6 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/accounts/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/accounts/target" />
       <excludeFolder url="file://$MODULE_DIR$/cards/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/cards/target" />
       <excludeFolder url="file://$MODULE_DIR$/configserver/.idea" />
@@ -14,6 +12,15 @@
       <excludeFolder url="file://$MODULE_DIR$/gatewayserver/target" />
       <excludeFolder url="file://$MODULE_DIR$/loans/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/loans/target" />
+      <excludeFolder url="file://$MODULE_DIR$/accounts_old/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/accounts_old/.mvn/wrapper" />
+      <excludeFolder url="file://$MODULE_DIR$/accounts_old/target" />
+      <excludeFolder url="file://$MODULE_DIR$/cards/.mvn/wrapper" />
+      <excludeFolder url="file://$MODULE_DIR$/configserver/.mvn/wrapper" />
+      <excludeFolder url="file://$MODULE_DIR$/configserver/target" />
+      <excludeFolder url="file://$MODULE_DIR$/eurekaserver/.mvn/wrapper" />
+      <excludeFolder url="file://$MODULE_DIR$/gatewayserver/.mvn/wrapper" />
+      <excludeFolder url="file://$MODULE_DIR$/loans/.mvn/wrapper" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
