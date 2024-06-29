@@ -20,10 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(
-        name = "CRUD REST APIs for Accounts in EazyBank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account details"
-)
+@Tag(name = "CRUD REST APIs for Accounts in EazyBank",
+        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account details")
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
@@ -33,10 +31,8 @@ public class AccountsController {
   private IAccountsService iAccountsService;
 
 
-  @Operation(
-          summary = "Create Account REST API",
-          description = "REST API to create new Customer &  Account inside EazyBank"
-  )
+  @Operation(summary = "Create Account REST API",
+          description = "REST API to create new Customer &  Account inside EazyBank")
   @ApiResponses({
           @ApiResponse(
                   responseCode = "201",
@@ -45,9 +41,7 @@ public class AccountsController {
           @ApiResponse(
                   responseCode = "500",
                   description = "HTTP Status Internal Server Error",
-                  content = @Content(
-                          schema = @Schema(implementation = ErrorResponseDto.class)
-                  )
+                  content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
           )
   }
   )
@@ -59,10 +53,8 @@ public class AccountsController {
             .body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
   }
 
-  @Operation(
-          summary = "Fetch Account Details REST API",
-          description = "REST API to fetch Customer &  Account details based on a mobile number"
-  )
+  @Operation(summary = "Fetch Account Details REST API",
+          description = "REST API to fetch Customer &  Account details based on a mobile number")
   @ApiResponses({
           @ApiResponse(
                   responseCode = "200",
@@ -71,9 +63,7 @@ public class AccountsController {
           @ApiResponse(
                   responseCode = "500",
                   description = "HTTP Status Internal Server Error",
-                  content = @Content(
-                          schema = @Schema(implementation = ErrorResponseDto.class)
-                  )
+                  content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
           )
   }
   )
@@ -85,10 +75,8 @@ public class AccountsController {
     return ResponseEntity.status(HttpStatus.OK).body(customerDto);
   }
 
-  @Operation(
-          summary = "Update Account Details REST API",
-          description = "REST API to update Customer &  Account details based on a account number"
-  )
+  @Operation(summary = "Update Account Details REST API",
+          description = "REST API to update Customer &  Account details based on a account number")
   @ApiResponses({
           @ApiResponse(
                   responseCode = "200",
@@ -101,9 +89,7 @@ public class AccountsController {
           @ApiResponse(
                   responseCode = "500",
                   description = "HTTP Status Internal Server Error",
-                  content = @Content(
-                          schema = @Schema(implementation = ErrorResponseDto.class)
-                  )
+                  content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
           )
   }
   )
@@ -118,10 +104,8 @@ public class AccountsController {
                     .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_UPDATE));
   }
 
-  @Operation(
-          summary = "Delete Account & Customer Details REST API",
-          description = "REST API to delete Customer &  Account details based on a mobile number"
-  )
+  @Operation(summary = "Delete Account & Customer Details REST API",
+          description = "REST API to delete Customer &  Account details based on a mobile number")
   @ApiResponses({
           @ApiResponse(
                   responseCode = "200",
@@ -134,9 +118,7 @@ public class AccountsController {
           @ApiResponse(
                   responseCode = "500",
                   description = "HTTP Status Internal Server Error",
-                  content = @Content(
-                          schema = @Schema(implementation = ErrorResponseDto.class)
-                  )
+                  content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
           )
   }
   )

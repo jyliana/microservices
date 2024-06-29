@@ -20,10 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(
-        name = "CRUD REST APIs for Loans in EazyBank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details"
-)
+@Tag(name = "CRUD REST APIs for Loans in EazyBank",
+        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details")
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
@@ -42,9 +40,7 @@ public class LoansController {
           @ApiResponse(
                   responseCode = "500",
                   description = "HTTP Status Internal Server Error",
-                  content = @Content(
-                          schema = @Schema(implementation = ErrorResponseDto.class)
-                  )
+                  content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
           )
   }
   )
@@ -58,22 +54,14 @@ public class LoansController {
             .body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
   }
 
-  @Operation(
-          summary = "Fetch Loan Details REST API",
-          description = "REST API to fetch loan details based on a mobile number"
-  )
+  @Operation(summary = "Fetch Loan Details REST API",
+          description = "REST API to fetch loan details based on a mobile number")
   @ApiResponses({
-          @ApiResponse(
-                  responseCode = "200",
-                  description = "HTTP Status OK"
-          ),
-          @ApiResponse(
-                  responseCode = "500",
+          @ApiResponse(responseCode = "200",
+                  description = "HTTP Status OK"),
+          @ApiResponse(responseCode = "500",
                   description = "HTTP Status Internal Server Error",
-                  content = @Content(
-                          schema = @Schema(implementation = ErrorResponseDto.class)
-                  )
-          )
+                  content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
   }
   )
   @GetMapping("/fetch")
@@ -84,26 +72,19 @@ public class LoansController {
     return ResponseEntity.status(HttpStatus.OK).body(loansDto);
   }
 
-  @Operation(
-          summary = "Update Loan Details REST API",
-          description = "REST API to update loan details based on a loan number"
-  )
+  @Operation(summary = "Update Loan Details REST API",
+          description = "REST API to update loan details based on a loan number")
   @ApiResponses({
           @ApiResponse(
                   responseCode = "200",
-                  description = "HTTP Status OK"
-          ),
+                  description = "HTTP Status OK"),
           @ApiResponse(
                   responseCode = "417",
-                  description = "Expectation Failed"
-          ),
+                  description = "Expectation Failed"),
           @ApiResponse(
                   responseCode = "500",
                   description = "HTTP Status Internal Server Error",
-                  content = @Content(
-                          schema = @Schema(implementation = ErrorResponseDto.class)
-                  )
-          )
+                  content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
   }
   )
   @PutMapping("/update")
@@ -120,10 +101,8 @@ public class LoansController {
     }
   }
 
-  @Operation(
-          summary = "Delete Loan Details REST API",
-          description = "REST API to delete Loan details based on a mobile number"
-  )
+  @Operation(summary = "Delete Loan Details REST API",
+          description = "REST API to delete Loan details based on a mobile number")
   @ApiResponses({
           @ApiResponse(
                   responseCode = "200",
@@ -136,9 +115,7 @@ public class LoansController {
           @ApiResponse(
                   responseCode = "500",
                   description = "HTTP Status Internal Server Error",
-                  content = @Content(
-                          schema = @Schema(implementation = ErrorResponseDto.class)
-                  )
+                  content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
           )
   }
   )
