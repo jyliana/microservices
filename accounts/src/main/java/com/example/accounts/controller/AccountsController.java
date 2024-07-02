@@ -1,6 +1,7 @@
 package com.example.accounts.controller;
 
 import com.example.accounts.constants.AccountsConstants;
+import com.example.accounts.dto.AccountsContactInfoDto;
 import com.example.accounts.dto.CustomerDto;
 import com.example.accounts.dto.ErrorResponseDto;
 import com.example.accounts.dto.ResponseDto;
@@ -32,6 +33,7 @@ public class AccountsController {
 
   private final IAccountsService iAccountsService;
   private final Environment environment;
+  private final AccountsContactInfoDto accountsContactInfoDto;
 
   @Value("${build.version}")
   private String buildVersion;
@@ -168,9 +170,33 @@ public class AccountsController {
   public ResponseEntity<String> getJavaVersion() {
     return ResponseEntity
             .status(HttpStatus.OK)
-            .body(environment.getProperty("MAVEN_HOME"));
+            .body(environment.getProperty("JAVA_HOME"));
   }
 
+  @Operation(
+          summary = "Get Contact Info",
+          description = "Contact Info details that can be reached out in case of any issues"
+  )
+  @ApiResponses({
+          @ApiResponse(
+                  responseCode = "200",
+                  description = "HTTP Status OK"
+          ),
+          @ApiResponse(
+                  responseCode = "500",
+                  description = "HTTP Status Internal Server Error",
+                  content = @Content(
+                          schema = @Schema(implementation = ErrorResponseDto.class)
+                  )
+          )
+  }
+  )
+  @GetMapping("/contact-info")
+  public ResponseEntity<AccountsContactInfoDto> getContactInfo() {
+    return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(accountsContactInfoDto);
+  }
 
 }
 
