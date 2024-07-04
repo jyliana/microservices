@@ -2,12 +2,34 @@ spring:
   application:
     name: "configserver"
   profiles:
-    active: native
+    #     active: native
+    active: git
   cloud:
     config:
       server:
-        native:
-          search-location: "classpath:/config"
+        git:
+          uri: "https://github.com/jyliana/microservices-config.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+#        native:
+#          search-location: "classpath:/config"
+#          search-locations: "file:///Users//eazybytes//Documents//config"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+encrypt:
+  key: "45D81EC1EF61DF9AD8D3E5BB397F9"
 
 server:
   port: 8071
