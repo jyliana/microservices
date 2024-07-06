@@ -16,11 +16,11 @@ spring:
 #        native:
 #          search-location: "classpath:/config"
 #          search-locations: "file:///Users//eazybytes//Documents//config"
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
+#  rabbitmq:
+#    host: "localhost"
+#    port: 5672
+#    username: "guest"
+#    password: "guest"
 
 management:
   endpoints:
