@@ -94,6 +94,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <image>
+                        <name>jyliana/${project.artifactId}:s8</name>
+                    </image>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -108,7 +111,7 @@
                 <version>3.4.1</version>
                 <configuration>
                     <to>
-                        <image>jyliana/${project.artifactId}:s8</image>
+                        <image>jyliana/${project.artifactId}:s9</image>
                     </to>
                 </configuration>
             </plugin>
