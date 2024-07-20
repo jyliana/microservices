@@ -135,7 +135,7 @@
                 <version>3.4.1</version>
                 <configuration>
                     <to>
-                        <image>jyliana/${project.artifactId}:s12</image>
+                        <image>jyliana/${project.artifactId}:s13</image>
                     </to>
                 </configuration>
             </plugin>

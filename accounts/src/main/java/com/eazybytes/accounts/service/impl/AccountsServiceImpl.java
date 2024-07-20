@@ -31,71 +31,84 @@ public class AccountsServiceImpl implements IAccountsService {
 
   @Override
   public void createAccount(CustomerDto customerDto) {
-    var customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
-    var optionalCustomer = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
+	var customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
+	var optionalCustomer = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
 
-    if (optionalCustomer.isPresent()) {
-      throw new CustomerAlreadyExistsException("Customer already registered with given mobileNumber " + customerDto.getMobileNumber());
-    }
+	if (optionalCustomer.isPresent()) {
+	  throw new CustomerAlreadyExistsException("Customer already registered with given mobileNumber " + customerDto.getMobileNumber());
+	}
 
-    var savedCustomer = customerRepository.save(customer);
-    var savedAccount = accountsRepository.save(createNewAccount(savedCustomer));
-    sendCommunication(savedAccount, savedCustomer);
+	var savedCustomer = customerRepository.save(customer);
+	var savedAccount = accountsRepository.save(createNewAccount(savedCustomer));
+	sendCommunication(savedAccount, savedCustomer);
   }
 
   private void sendCommunication(Accounts account, Customer customer) {
-    var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(), customer.getName(),
-            customer.getEmail(), customer.getMobileNumber());
-    log.info("Sending Communication request for the details: {}", accountsMsgDto);
-    var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
-    log.info("Is the Communication request successfully triggered ? : {}", result);
+	var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(), customer.getName(),
+			customer.getEmail(), customer.getMobileNumber());
+	log.info("Sending Communication request for the details: {}", accountsMsgDto);
+	var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
+	log.info("Is the Communication request successfully triggered ? : {}", result);
   }
 
   @Override
   public CustomerDto fetchAccount(String mobileNumber) {
-    var customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
-            () -> new ResourceNotFoundException("Customer", "mobile number", mobileNumber));
+	var customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+			() -> new ResourceNotFoundException("Customer", "mobile number", mobileNumber));
 
-    var accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
-            () -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString())
-    );
+	var accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
+			() -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString())
+	);
 
-    var customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
-    customerDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
+	var customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+	customerDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
-    return customerDto;
+	return customerDto;
   }
 
   @Override
   public boolean updateAccount(CustomerDto customerDto) {
-    boolean isUpdated = false;
-    var accountsDto = customerDto.getAccountsDto();
-    if (accountsDto != null) {
-      var accounts = accountsRepository.findById(accountsDto.getAccountNumber()).orElseThrow(
-              () -> new ResourceNotFoundException("Account", "AccountNumber", accountsDto.getAccountNumber().toString())
-      );
-      AccountsMapper.mapToAccounts(accountsDto, accounts);
-      accounts = accountsRepository.save(accounts);
+	boolean isUpdated = false;
+	var accountsDto = customerDto.getAccountsDto();
+	if (accountsDto != null) {
+	  var accounts = accountsRepository.findById(accountsDto.getAccountNumber()).orElseThrow(
+			  () -> new ResourceNotFoundException("Account", "AccountNumber", accountsDto.getAccountNumber().toString())
+	  );
+	  AccountsMapper.mapToAccounts(accountsDto, accounts);
+	  accounts = accountsRepository.save(accounts);
 
-      Long customerId = accounts.getCustomerId();
-      Customer customer = customerRepository.findById(customerId).orElseThrow(
-              () -> new ResourceNotFoundException("Customer", "CustomerID", customerId.toString())
-      );
-      CustomerMapper.mapToCustomer(customerDto, customer);
-      customerRepository.save(customer);
-      isUpdated = true;
-    }
-    return isUpdated;
+	  Long customerId = accounts.getCustomerId();
+	  Customer customer = customerRepository.findById(customerId).orElseThrow(
+			  () -> new ResourceNotFoundException("Customer", "CustomerID", customerId.toString())
+	  );
+	  CustomerMapper.mapToCustomer(customerDto, customer);
+	  customerRepository.save(customer);
+	  isUpdated = true;
+	}
+	return isUpdated;
   }
 
   @Override
   public boolean deleteAccount(String mobileNumber) {
-    var customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
-            () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
-    );
-    accountsRepository.deleteByCustomerId(customer.getCustomerId());
-    customerRepository.deleteById(customer.getCustomerId());
-    return true;
+	var customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+			() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
+	);
+	accountsRepository.deleteByCustomerId(customer.getCustomerId());
+	customerRepository.deleteById(customer.getCustomerId());
+	return true;
+  }
+
+  @Override
+  public boolean updateCommunicationStatus(Long accountNumber) {
+	boolean isUpdated = false;
+	if (accountNumber != null) {
+	  Accounts accounts = accountsRepository.findById(accountNumber)
+			  .orElseThrow(() -> new ResourceNotFoundException("Account", "AccountNumber", accountNumber.toString()));
+	  accounts.setCommunicationSw(true);
+	  accountsRepository.save(accounts);
+	  isUpdated = true;
+	}
+	return isUpdated;
   }
 
   /**
@@ -103,14 +116,14 @@ public class AccountsServiceImpl implements IAccountsService {
    * @return the new account details
    */
   private Accounts createNewAccount(Customer customer) {
-    var newAccount = new Accounts();
-    newAccount.setCustomerId(customer.getCustomerId());
-    long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
+	var newAccount = new Accounts();
+	newAccount.setCustomerId(customer.getCustomerId());
+	long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
 
-    newAccount.setAccountNumber(randomAccNumber);
-    newAccount.setAccountType(AccountsConstants.SAVINGS);
-    newAccount.setBranchAddress(AccountsConstants.ADDRESS);
-    return newAccount;
+	newAccount.setAccountNumber(randomAccNumber);
+	newAccount.setAccountType(AccountsConstants.SAVINGS);
+	newAccount.setBranchAddress(AccountsConstants.ADDRESS);
+	return newAccount;
   }
 
 }
