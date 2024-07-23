@@ -100,7 +100,7 @@
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
+			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
 		</dependency>
 
         <!--		<dependency>-->
@@ -157,7 +157,7 @@
 				<version>3.4.1</version>
 				<configuration>
 					<to>
-						<image>jyliana/${project.artifactId}:s13</image>
+						<image>jyliana/${project.artifactId}:s14</image>
 					</to>
 				</configuration>
 			</plugin>
